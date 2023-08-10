@@ -1,4 +1,4 @@
-# Drone delivery system -- group 35
+# Drone delivery system 
 
 Please run the following commands at the root folder `droneDeliverySystem`
 
