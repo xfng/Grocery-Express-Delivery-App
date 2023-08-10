@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  dronedeliverysystem:
+    image: dronedeliverysystem
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/drone?allowPublicKeyRetrieval=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=testuser
+      - SPRING_DATASOURCE_PASSWORD=testpassword
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword  
+      MYSQL_DATABASE: drone
+      MYSQL_USER: testuser  
+      MYSQL_PASSWORD: testpassword
+    volumes:
+      - ./data:/var/lib/mysql  # Persist data to a volume
+      - ./dump:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
